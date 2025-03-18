@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>About Us - FICTITIOUS SONICITIES</title>
+  <link href="https://fonts.googleapis.com/css2?family=Jacquard+12&family=Baskervville&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Baskervville', serif;
+      color: white;
+      margin: 0;
+      padding: 0;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      overflow: hidden;
+      position: relative;
+    }
+
+    video {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      z-index: -1;
+    }
+
+    /* Black Transparent Layer */
+    body::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.7);
+      z-index: -1;
+    }
+
+    .about-container {
+      background: rgba(0, 0, 0, 0.8);
+      padding: 30px;
+      border-radius: 10px;
+      width: 90%;
+      max-width: 800px;
+      text-align: center;
+    }
+
+    .about-title {
+      font-family: 'Jacquard 12', cursive;
+      font-size: 3em;
+      margin-bottom: 20px;
+    }
+
+    .about-content {
+      font-size: 1.2em;
+      line-height: 1.6em;
+      max-width: 700px;
+      margin: 0 auto;
+    }
+
+    /* Back Button (Hover-Only) */
+    .back-button {
+      position: absolute;
+      bottom: 20px;
+      right: 20px;
+      font-size: 2em;
+      cursor: pointer;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    body:hover .back-button {
+      opacity: 1;
+    }
+  </style>
+</head>
+<body>
+  <video autoplay muted loop>
+    <source src="Niko_1.mp4" type="video/mp4">
+  </video>
+
+  <div class="about-container">
+    <h1 class="about-title">About Us</h1>
+    <div class="about-content">
+      This Project is only an attempt of community building and communicating with fellow queer and other same minded people about sound music identities as apropriatelly and unrestrictedly is possible, with our given resources.
+      It's merely where, I will express my opinions and thoughts, and where i am gonna be waiting for yours.
+      About anything you want, given that you arrived here at the first place conciously.
+      <p>thank you, so much!</p>
+      <p>I hope we will talk soon!</p>
+
+        <p>erwniko</p>
+
+     
+    </div>
+  </div>
+
+  <!-- Back Button -->
+  <a href="index.html" class="back-button">⬅</a>
+</body>
+</html>

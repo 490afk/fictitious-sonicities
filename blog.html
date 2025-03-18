@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Journal Entries - FICTITIOUS SONICITIES</title>
+  <link href="https://fonts.googleapis.com/css2?family=Jacquard+12&family=Baskervville&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Baskervville', serif; /* Default font for text */
+      color: white;
+      margin: 0;
+      padding: 0;
+      height: 100vh;
+      display: flex;
+      align-items: stretch;
+      overflow: hidden;
+      position: relative;
+    }
+
+    video {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      z-index: -1;
+    }
+
+    /* Black Transparent Layer (Dynamic) */
+    .journal-container::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.7); /* Adjust opacity as needed */
+      z-index: -1;
+      display: none; /* Hidden by default */
+    }
+
+    .journal-container.has-text::before {
+      display: block; /* Show when text is present */
+    }
+
+    .journal-container {
+      display: flex;
+      width: 100%;
+      height: 100vh;
+      position: relative;
+    }
+
+    /* Left Side: Journal List */
+    .journal-list-section {
+      width: 50%;
+      padding: 30px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .journal-title {
+      font-family: 'Jacquard 12', cursive; /* Keep title font */
+      font-size: 2.5em;
+      margin-bottom: 20px;
+    }
+
+    .journal-list {
+      list-style: none;
+      padding: 0;
+      text-align: center;
+    }
+
+    .journal-list li {
+      margin: 15px 0;
+    }
+
+    .journal-button {
+      display: block;
+      width: 80%;
+      padding: 15px;
+      text-align: center;
+      font-size: 1.5em;
+      color: white;
+      text-decoration: none;
+      background-color: rgba(0, 0, 0, 0.7);
+      border-radius: 5px;
+      transition: 0.3s;
+    }
+
+    .journal-button:hover {
+      background-color: rgba(249, 99, 237, 0.747);
+    }
+
+    /* Right Side: Journal Reading Section */
+    .journal-reading {
+      width: 50%;
+      padding: 30px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      overflow-y: auto;
+      background: rgba(0, 0, 0, 0.8); /* Darker background for readability */
+    }
+
+    .journal-reading h2 {
+      font-family: 'Jacquard 12', cursive; /* Keep title font */
+      font-size: 2.5em;
+      margin-bottom: 10px;
+    }
+
+    .journal-reading h3 {
+      font-family: 'Baskervville', serif; /* Subtitle font */
+      font-size: 1.5em;
+      margin-bottom: 20px;
+      color: rgba(255, 255, 255, 0.8);
+    }
+
+    .journal-reading p {
+      font-size: 1.2em;
+      line-height: 1.6em;
+      max-width: 800px;
+      margin: 20px auto;
+    }
+
+    /* Close Button (Hover-Only) */
+    .close-reading {
+      position: absolute;
+      top: 20px;
+      right: 30px;
+      font-size: 2em;
+      cursor: pointer;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    .journal-reading:hover .close-reading {
+      opacity: 1;
+    }
+
+    /* Back Button (Hover-Only) */
+    .back-button {
+      position: absolute;
+      bottom: 20px;
+      right: 20px;
+      font-size: 2em;
+      cursor: pointer;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    .journal-container:hover .back-button {
+      opacity: 1;
+    }
+     /* Back Button (Hover-Only) */
+     .back-button {
+      position: absolute;
+      bottom: 20px;
+      right: 20px;
+      font-size: 2em;
+      cursor: pointer;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    body:hover .back-button {
+      opacity: 1;
+    }
+  </style>
+</head>
+<body>
+  <video autoplay muted loop>
+    <source src="Niko_1.mp4" type="video/mp4">
+  </video>
+
+  <!-- Back Button (Hover-Only) -->
+  <a href="index.html" class="back-button">⬅</a>
+
+  <div class="journal-container">
+    <!-- Left Side: Journal List -->
+    <div class="journal-list-section">
+      <h1 class="journal-title">Journal Entries</h1>
+      <ul class="journal-list">
+        <li><a href="#entry1" class="journal-button" onclick="openJournal('entry1')">Queering Artistry</a></li>
+        <li><a href="#entry2" class="journal-button" onclick="openJournal('entry2')">My own Cynicism</a></li>
+        <li><a href="#entry3" class="journal-button" onclick="openJournal('entry3')">The Need of Finishing Things</a></li>
+        <li><a href="#entry4" class="journal-button" onclick="openJournal('entry4')">Eusexua</a></li>
+        <li><a href="#entry5" class="journal-button" onclick="openJournal('entry5')">Adversarial Feelings</a></li>
+      </ul>
+    </div>
+
+    <!-- Right Side: Journal Reading Section -->
+    <div id="journal-reading" class="journal-reading">
+      <span class="close-reading" onclick="closeJournal()">✖</span>
+      <h2 id="journal-title"></h2>
+      <h3 id="journal-subtitle"></h3>
+      <p id="journal-text"></p>
+    </div>
+  </div>
+
+  <script>
+    const journalEntries = {
+      "entry1": {
+        "title": "Queering Artistry",
+        "subtitle": "Journal Entry no.1 | Media: INFINITE SPEEDS: Structure and Stupidity: Talking Music w/ Sunik Kim",
+        "text": "I was reading a transcribed conversation between two electronic experimental music nerds, and they were talking about all of these artists and their ideas, like: An artist that wanted to make a techno track without a kick or the guy that experimented with intensity of 500 different instruments layered on each other. They were talking about endlessly tweaking an idea, a fraction of sound, or something, until you find THE ONE you are looking for, to guide the formation of the piece you are making. Well at that moment I thought: Isn't that kind of a forced way of music making? It seems like you are doing something you like (tweaking) and then remember: Wait I am a musician so I need my idea to be molded on some acceptable form like an Album! These types of music seem like they do not have purpose. Seems like people that create this type of music have too much time and enough privilege, to focus ---in a somewhat clinical way--- on fine details, that are not burdened with significance. They talked about their music being associated with noise music. And that they didn't like that. Noise or Ambient music to me have a very specific purpose. From person to person it might defer but it's still specific. For the noise artist, performing on stage, noise brings a kind of catharsis. They intensely express their feelings in a very raw way. For a member of the audience, noise is filling their mind with something that momentarily takes away the thoughts that are flooding it. For Ambient listeners, this type of music is a meditative experience, a way to calm themselves down or feel the background with something pleasant. For ambient artists, when they bring in layer after layer of slightly different synth textures, the decision is intuitive based on feeling and desire. I can go on, but I think I made my point. That's the difference between music that I would consider queer and not queer. Queerness is not a sexual or gender identity, or at least it's not only that. It's a way of existing and usually that way of existing requires large amounts of ways for coping in this world. That is how queer people found shelter in Electronic and experimental music."
+      },
+      "entry2": {
+        "title": "My own Cynicism",
+        "subtitle": "Journal Entry no.2.1 | Media: HAN BYUNG-CHUL: The Disappearance of Rituals: A Topology of the Present",
+        "text": "I am so used to—in academic settings—being ready to judge or comment on something that I don't agree with, that I cannot find myself meaningfully invested and involved in things I now aspire to be a part of. I spent a lot of time inside my head, trying to make sense of things and constantly reading in different mediums. I am creating ideas, and I draw conclusions—maybe inspired at times—ready to share my perspectives with friends and peers, but I don't—usually. The reason for that is not that my community failed me or that someone is actively stopping me from communicating. The reason is that I communicated my opinions and ideas as little as possible. During my active years in university, I was comfortably removed from the position of the participant. I never had trouble comprehending 'weird,' 'progressive,' or 'boundary-breaking' ideas, and I never felt comfortable expressing myself to other people. I also never needed to put a lot of effort into generating an interesting idea, and it was always enough for the assignment. Other people around me were taking time generating a more complete idea and putting a lot of work into it. So, in an attempt to protect my own ego, I started removing myself from the position of the active participant, and I was more in a silent spectator position. In class, I spoke when I absolutely needed to speak, and I made sure I was clearly communicating that I knew what I was talking about. That was accepted by my peers and teachers. When I finally understood that the ideas I had consumed and wanted to express needed to be shared and debated, I found myself unable to exist in a vulnerable way with others. I cringed whenever academic discussions revolved around ideas that were already well-established in my mind. I was impatient, eager to move beyond the familiar and explore something new. So I ended up forming my academic ideas and rhetoric with that in mind. Generating knowledge and ideas by myself in an introverted and introspective way is also important. I just think that I am not alone in this cynical way of research. I think a lot of people of my generation end up secluding themselves like this, just because we can. Although it's not as simple as: *technology has ruined us*. I mean, it has, but technology is not the reason this is happening to me. I know that, because I have the same exact problem with online communities, I still cringe in online communities when they are discussing stuff I already understand without any additional input. Technology is not the reason this is happening to me, but it might be the reason it could happen to me. We as a generation are hyper-individualistic and kind of narcissistic, because we feel that we can answer everything, and at least partially we have to blame technology for that. But finding out why this is happening is not the point of this article. I am not claiming to be of a superior intellect compared to people around me. At times I feel the exact opposite actually. The reason for why I am not communicating my ideas with my peers often is that I feel like I don't have anything to add to the conversation. I wouldn't expose myself to people to say something that they already know. The thing is that I don't know if they already know. They might not know... And even if they do, my input might be useful after all."
+      },
+      "entry3": {
+        "title": "The Need of Finishing Things",
+        "subtitle": "Journal Entry no.2.2 | Media: HAN BYUNG-CHUL: The Disappearance of Rituals: A Topology of the Present",
+        "text": "I always felt kinda guilty whenever (being an artist and musician) I was anxious for concerts or movies, books, albums, events, anything artistic really to FINISH!! I always knew that was okay to feel, but nobody else did, so I felt guilt. For a while, I thought this must be an attention span problem, or a social anxiety symptom, or maybe a generational defect of globalization, a proof that capitalism broke my generation beyond repair. These weren't the most satisfying answers for me, and before you say 'it doesn't need to be satisfying to be true or accurate', I'm not interested in that... Living in a capitalistic society, we are meant to produce. Our idea of worth, value, success is based on whether or not we sufficiently participated in the production process. Even though it feels like we as the victims have already unveiled that the meaning of life is not work, we have yet to grasp in what other ways this is affecting us. Ritual, Rest, Closure, are some of the things that are disappearing from our world because of this Compulsion of Production. The ability to perform a simple repetitive task for its own sake without monetary, personal, or societal value. The Peace and quiet of a resting period, not just because you need to recover for or from something. The skill of leaving things sit before you move on to the next one. It clicked that I am in need of closure of the experience of art, I need it to finish before it fleets away. I need it to stay, and it cannot stay, it cannot exist if it doesn't finish."
+      },
+      "entry4": {
+        "title": "Eusexua",
+        "subtitle": "Journal Entry no.3 | Media: FKA TWIGS: EUSEXUA (2025) album",
+        "text": "Eusexua is one of those albums that ---I think--- will make history in the queer community, or already has. I and one of my closer friends organized a listening session of the album in the way we felt is appropriate to FKA twigs listening experience, silent in a living room with our best sound system blasting with LED funky lights in the ceiling. Just before we put it on, we were discussing the notion that, as we grow as artists, we are becoming fonder of this spiritual ---closer to god--- way of experiencing music. Not in a religious way, but in a situated context-driven way. We were right, this album was a religious experience. It transcended critique in a regular way. So what I can do is express some emotions informed by my queerness, --- FKA's music is inherently queer in my eyes---, and by my music knowledge and familiarity. One of my first observations, and one of the most apparent ones, is the world-building ability of the artist, something that is closely connected to the queer nature of the music. It takes you in her world with the chosen sounds and the mystique and atmosphere of the composition. Most importantly, I noticed a lack of hierarchy of sounds and components. Nothing and everything was the protagonist of the song. There was a lack of what we would call depth of field. No particular frequency group or timbral group was closer to you, it was all perfectly blended in front of your face, but at the same time it was one of the deepest works you will ever listen to, not in a horizontal direction --- left to right or front to back --- but in a geographical sense, in a 4th dimensional way. You were inside the music, you weren't an observer, but a participant. But by far the most exciting thing was how every component --- lyrics, melody, harmony, rhythm --- had its own life independently. The one was growing into the other in a very organic and natural way, outside of the grid of the song. At one point, the powerfully engineered bass was resonating with the windows of the apartment, and then I realized this is what it is. The components are relating with each other the same way that the bass frequency was relating with the glass and producing a different vibrational frequency. In that moment I called that 'Situated music', influenced by Donna Haraway's 'Situated Knowledge'. In conclusion, these observations are what I would invoke to determine what queer music is. Gender identity and sexuality are only just a part of being queer. The other unexplainable parts are what --- in my opinion --- make it really queer."
+      },
+      "entry5": {
+        "title": "Adversarial Feelings",
+        "subtitle": "Journal Entry no.4 | Media: LOREM: Adversarial Feelings album",
+        "text": "I listened to this album because Spotify suggested it. It was interesting to listen to. It was also weird and experimental, for a specific kind of audience.I don’t have any problem with that, quite the opposiWhat does bother me is that we live in an age that most likely, despite of who you are, you would listen to music like this out of its original context. I get that we shouldn’t expect everything served on a silver platter, but I can’t pretend to accept that this is the way we interact with content nowadays.But it is true. This is the way that any of us gonna find this, or any other albums. We won’t just randomly find ourselves at lorem.parts.com or Krisis Publishing website. An example of another form of art facing the same problem would be conceptual film. Recently I watched the movie: Funny Games (U.S.). When the movie was over I was confused. I saw an extremely unnecessarily violent and unsettling film and what I got out of it was just a longing for closure. Turns out, there was a text published by Haneke (the director) as a guide his movies. This guide is talking mostly about depiction of violence in cinema. After that read, the movie makes sense to me. I thought it was brilliant how he showed us in his own way how he thinks this is harmful through art. Its not impossible to realise what the message of the movie was without the guide, I’m just saying is that what we need is a space, physical or otherwise, that artists can share and experience their art in the way they intend to, inside and despite our current neoliberally infested society. This is what queer spaces are. This is the cause the driving force and essence  of queer artistry."
+      }
+    };
+
+    function openJournal(entryId) {
+      const entry = journalEntries[entryId];
+      document.getElementById("journal-title").innerText = entry.title;
+      document.getElementById("journal-subtitle").innerText = entry.subtitle;
+      document.getElementById("journal-text").innerText = entry.text;
+      document.getElementById("journal-reading").style.display = "block";
+      document.querySelector(".journal-container").classList.add("has-text"); // Show black panel
+    }
+
+    function closeJournal() {
+      document.getElementById("journal-reading").style.display = "none";
+      document.querySelector(".journal-container").classList.remove("has-text"); // Hide black panel
+    }
+    
+  </script>
+   <!-- Back Button -->
+   <a href="index.html" class="back-button">⬅</a>
+  </body>
+</body>
+</html>
